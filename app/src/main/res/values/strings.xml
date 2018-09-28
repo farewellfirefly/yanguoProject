@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">yanguoweather</string>
     <string name="北京天气">北京天气</string>
+    <string name="北京">北京</string>
 </resources>

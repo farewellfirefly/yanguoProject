@@ -58,4 +58,24 @@
         android:background="@drawable/biz_plugin_weather_shenzhen_bg"
         android:orientation="vertical">
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/weather_today"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/title"
+        android:padding="10.0dip">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="15.0dip"
+            android:lines="1"
+            android:text="@string/北京"
+            android:textColor="@android:color/white"
+            android:textSize="40.0sp" />
+    </RelativeLayout>
 </RelativeLayout>
