@@ -57,6 +57,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@id/title"
         android:background="@drawable/biz_plugin_weather_shenzhen_bg"
         android:orientation="vertical">
         <!--今日天气信息-->
@@ -151,8 +152,8 @@
 
                     <ImageView
                         android:id="@+id/pm2_5_img"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_marginStart="5.0dip"
                         android:src="@drawable/biz_plugin_weather_0_50" />
 
@@ -180,8 +181,8 @@
                 <!--天气情况图片示例-->
                 <ImageView
                     android:id="@+id/weather_img"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_alignParentStart="true"
                     android:src="@drawable/biz_plugin_weather_qing" />
                 <!--今日星期-->
