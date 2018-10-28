@@ -1,4 +1,4 @@
-package cn.edu.pku.yanguo.util;
+package pku.yanguoweather.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
