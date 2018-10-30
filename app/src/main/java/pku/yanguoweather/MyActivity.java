@@ -1,6 +1,8 @@
 package pku.yanguoweather;
 
+import android.content.Intent;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import pku.yanguoweather.bean.TodayWeather;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -28,6 +30,7 @@ import pku.yanguoweather.util.NetUtil;
 public class MyActivity extends AppCompatActivity implements View.OnClickListener{
     private static final int UPDATE_TODAY_WEATHER = 1;
     private ImageView mUpdateBtn;
+    private ImageView mCitySelect;
     private TextView cityTv, timeTv, humidityTv, weekTv, pmDataTv, pmQualityTv,
             temperatureTv, climateTv, windTv, city_name_Tv,wenduTv;
     private ImageView weatherImg, pmImg;
@@ -48,7 +51,6 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         setContentView(R.layout.yanguo_layout);
-
         mUpdateBtn =  findViewById(R.id.title_update_btn);
         mUpdateBtn.setOnClickListener(this);
         if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
@@ -59,6 +61,8 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
             Log.d("myWeather", "网络挂了");
             Toast.makeText(MyActivity.this,"网络挂了！", Toast.LENGTH_LONG).show();
         }
+        mCitySelect = findViewById(R.id.title_city_manager);
+        mCitySelect.setOnClickListener(this);
         initView();
 
 
@@ -104,8 +108,30 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         windTv.setText("N/A");
         wenduTv.setText("N/A");
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            String newCityCode= data.getStringExtra("cityCode");
+            Log.d("myWeather", "选择的城市代码为"+newCityCode);
+            if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
+                Log.d("myWeather", "网络OK");
+                queryWeatherCode(newCityCode);
+            } else {
+                Log.d("myWeather", "网络挂了");
+                Toast.makeText(MyActivity.this, "网络挂了！", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
     @Override
     public void onClick(View view) {
+        if(view.getId()==R.id.title_city_manager){
+            Intent i = new Intent(this,SelectCity.class);
+            //startActivity(i);
+            startActivityForResult(i,1);
+        }
         if (view.getId() == R.id.title_update_btn){
             SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
             String cityCode = sharedPreferences.getString("main_city_code","101010100");
