@@ -9,7 +9,7 @@ import java.util.List;
 
 import pku.yanguoweather.bean.City;
 
-public class CityDB {
+public class CityDB {//数据库操作
     public static final String CITY_DB_NAME = "city.db";
     private static final String CITY_TABLE_NAME = "city";
     private SQLiteDatabase db;
@@ -26,8 +26,7 @@ public class CityDB {
                     String allPY = c.getString(c.getColumnIndex("allpy"));
             String allFirstPY = c.getString(c.getColumnIndex("allfirstpy"));
                     String firstPY = c.getString(c.getColumnIndex("firstpy"));
-                            City item = new City(province, city, number, firstPY
-                                    , allPY,allFirstPY);
+                            City item = new City(province, city, number, firstPY, allPY,allFirstPY);
             list.add(item);
         }
         return list;

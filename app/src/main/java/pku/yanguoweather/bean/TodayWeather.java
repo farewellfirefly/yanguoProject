@@ -1,6 +1,6 @@
 package pku.yanguoweather.bean;
 
-public class TodayWeather {
+public class TodayWeather { //建立Todayweather类，进行相关默认构造方法
     private String city;
     private String updatetime;
     private String wendu;

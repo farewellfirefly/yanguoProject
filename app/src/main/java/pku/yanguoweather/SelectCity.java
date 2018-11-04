@@ -16,7 +16,7 @@ import java.util.List;
 import pku.yanguoweather.app.MyApplication;
 import pku.yanguoweather.bean.City;
 
-public class SelectCity extends Activity implements View.OnClickListener{
+public class SelectCity extends Activity implements View.OnClickListener{//选择城市
     private ImageView mBackBtn;
     private ListView mList;
     private List<City>cityList;
@@ -30,7 +30,7 @@ public class SelectCity extends Activity implements View.OnClickListener{
     }
     private void initViews(){
         //为mBackBtn设置监听事件
-        mBackBtn=(ImageView)findViewById(R.id.title_back);
+        mBackBtn=(ImageView)findViewById(R.id.title_back);//返回选项
         mBackBtn.setOnClickListener(this);
         //mClearEditText =(ClearEditText)findViewById(R.id.search_city);
         mList=(ListView)findViewById(R.id.title_list);
@@ -59,9 +59,9 @@ public class SelectCity extends Activity implements View.OnClickListener{
     }
     public void onClick(View v){
         switch (v.getId()){
-            case R.id.title_back:
+            case R.id.title_back://返回主界面
                 Intent i = new Intent();
-                i.putExtra("cityCode","101160101");
+                i.putExtra("cityCode","101160101");//如果返回，则显示兰州的天气
                 setResult(RESULT_OK,i);
                 finish();
                 break;
