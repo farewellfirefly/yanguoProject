@@ -33,14 +33,23 @@
             android:gravity="center" />
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/searchlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_top">
+        <EditText
+            android:id="@+id/searchcity"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/searchlayout">
     <ListView
         android:id="@+id/title_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
     </ListView>
     </LinearLayout>
 </RelativeLayout>

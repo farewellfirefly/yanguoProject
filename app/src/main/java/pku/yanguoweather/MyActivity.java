@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import pku.yanguoweather.bean.TodayWeather;
@@ -27,9 +29,13 @@ import java.net.URL;
 import pku.yanguoweather.util.NetUtil;
 
 public class MyActivity extends AppCompatActivity implements View.OnClickListener{
+    //private EditText editText;
     private static final int UPDATE_TODAY_WEATHER = 1;
+    String cityvalue="101010100";//默认北京天气
+    String citynow="北京";//默认当前城市是北京
     private ImageView mUpdateBtn;//更新按钮
     private ImageView mCitySelect;//选择城市
+    private ProgressBar progressBar;
     private TextView cityTv, timeTv, humidityTv, weekTv, pmDataTv, pmQualityTv,
             temperatureTv, climateTv, windTv, city_name_Tv,wenduTv;//天气信息的文字
     private ImageView weatherImg, pmImg;
@@ -50,7 +56,9 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
         setContentView(R.layout.yanguo_layout);
+        //editText=findViewById(R.id.edittext);
         mUpdateBtn=(ImageView)findViewById(R.id.title_update_btn);
+        progressBar=findViewById(R.id.title_update_progress);
         mUpdateBtn.setOnClickListener(this);
         if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {//检查网络状态
             Log.d("myWeather", "网络OK");
@@ -63,10 +71,15 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         mCitySelect = findViewById(R.id.title_city_manager);//获取选择城市按钮
         mCitySelect.setOnClickListener(this);//监听选择城市按钮
         initView();//初始化控件
+        showweather(cityvalue);
 
 
     }
     void updateTodayWeather(TodayWeather todayWeather){//根据TodayWeather获取的信息更新控件内容
+        if(mUpdateBtn.getVisibility()==View.GONE&&progressBar.getVisibility()==View.VISIBLE){
+            progressBar.setVisibility(View.GONE);
+            mUpdateBtn.setVisibility(View.VISIBLE);
+        }
         city_name_Tv.setText(todayWeather.getCity()+"天气");
         cityTv.setText(todayWeather.getCity());
         timeTv.setText(todayWeather.getUpdatetime()+ "发布");
@@ -79,6 +92,63 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         windTv.setText("风力:"+todayWeather.getFengli());
         wenduTv.setText("当前温度："+todayWeather.getWendu()+"℃");
         //weatherImg.setImageResource();
+        if(todayWeather.getPm25()!=null){
+            int pm2_5=Integer.parseInt(todayWeather.getPm25());
+            if(pm2_5<=50)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_0_50);
+            if(pm2_5>50&&pm2_5<=100)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_51_100);
+            if(pm2_5>100&&pm2_5<=150)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_101_150);
+            if(pm2_5>150&&pm2_5<=200)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_151_200);
+            if(pm2_5>200&&pm2_5<=300)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_201_300);
+            if(pm2_5>300)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_greater_300);
+        }
+        //根据解析的天气类型更新界面的天气图案
+        String climate=todayWeather.getType();
+        if(climate.equals("暴雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoxue);
+        if(climate.equals("暴雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoyu);
+        if(climate.equals("大暴雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_dabaoyu);
+        if(climate.equals("大雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_daxue);
+        if(climate.equals("大雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_dayu);
+        if(climate.equals("多云"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_duoyun);
+        if(climate.equals("雷阵雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_leizhenyu);
+        if(climate.equals("雷阵雨冰雹"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_leizhenyubingbao);
+        if(climate.equals("晴"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_qing);
+        if(climate.equals("沙尘暴"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_shachenbao);
+        if(climate.equals("特大暴雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_tedabaoyu);
+        if(climate.equals("雾"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_wu);
+        if(climate.equals("小雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_xiaoxue);
+        if(climate.equals("小雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_xiaoyu);
+        if(climate.equals("阴"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_yin);
+        if(climate.equals("雨夹雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_yujiaxue);
+        if(climate.equals("阵雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhenyu);
+        if(climate.equals("阵雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhenxue);
+        if(climate.equals("中雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongxue);
+        if(climate.equals("中雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongyu);
         Toast.makeText(MyActivity.this,"更新成功！",Toast.LENGTH_SHORT).show();
     }
     void initView(){//初始化控件，并将控件内容设置成N/A
@@ -107,11 +177,26 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         windTv.setText("N/A");
         wenduTv.setText("N/A");
     }
+    void showweather(String cityvalue){
+        SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
+        String cityCode = sharedPreferences.getString("main_city_code",cityvalue);
+        Log.d("myWeather",cityCode);
+        if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {//检测网络状态
+            Log.d("myWeather", "网络OK");
+            queryWeatherCode(cityCode);
+        }else
+        {
+            Log.d("myWeather", "网络挂了");
+            Toast.makeText(MyActivity.this,"网络挂了！",Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String newCityCode= data.getStringExtra("cityCode");
+            citynow=data.getStringExtra("citynow");
+            cityvalue=newCityCode;
             Log.d("myWeather", "选择的城市代码为"+newCityCode);
             if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {
                 Log.d("myWeather", "网络OK");
@@ -129,20 +214,14 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         if(view.getId()==R.id.title_city_manager){//选择城市按钮
             Intent i = new Intent(this,SelectCity.class);
             //startActivity(i);
+            i.putExtra("citynow",citynow);
+            i.putExtra("cityvalue",cityvalue);
             startActivityForResult(i,1);
         }
         if (view.getId() == R.id.title_update_btn){//更新数据按钮
-            SharedPreferences sharedPreferences = getSharedPreferences("config", MODE_PRIVATE);
-            String cityCode = sharedPreferences.getString("main_city_code","101010100");
-                    Log.d("myWeather",cityCode);
-            if (NetUtil.getNetworkState(this) != NetUtil.NETWORN_NONE) {//检测网络状态
-                Log.d("myWeather", "网络OK");
-                queryWeatherCode(cityCode);
-            }else
-            {
-                Log.d("myWeather", "网络挂了");
-                Toast.makeText(MyActivity.this,"网络挂了！",Toast.LENGTH_LONG).show();
-            }
+            mUpdateBtn.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            showweather(cityvalue);
         }
     }
     private TodayWeather parseXML(String xmldata){//解析函数，解析获取的内容放入TodayWeather对象中
