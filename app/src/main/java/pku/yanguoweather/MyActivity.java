@@ -191,73 +191,7 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onPageScrollStateChanged(int state) {
     }
-
-    void updateTodayWeather(TodayWeather todayWeather) {//根据TodayWeather获取的信息更新控件内容
-        if (mUpdateBtn.getVisibility() == View.GONE && progressBar.getVisibility() == View.VISIBLE) {
-            progressBar.setVisibility(View.GONE);
-            mUpdateBtn.setVisibility(View.VISIBLE);
-        }
-        city_name_Tv.setText(todayWeather.getCity() + "天气");
-        cityTv.setText(todayWeather.getCity());
-        timeTv.setText(todayWeather.getUpdatetime() + "发布");
-        humidityTv.setText("湿度：" + todayWeather.getShidu());
-        pmDataTv.setText(todayWeather.getPm25());
-        pmQualityTv.setText(todayWeather.getQuality());
-        weekTv.setText(todayWeather.getDate());
-        temperatureTv.setText(todayWeather.getLow() + "~" + todayWeather.getHigh());
-        climateTv.setText(todayWeather.getType());
-        windTv.setText("风力:" + todayWeather.getFengli());
-        wenduTv.setText("当前温度：" + todayWeather.getWendu() + "℃");
-        //weatherImg.setImageResource();
-        //新增六天天气信息
-        week_today.setText(todayWeather.getWeek_today());
-        temperature.setText(todayWeather.getTemperatureL() + "~" + todayWeather.getTemperatureH());
-        climate.setText(todayWeather.getClimate());
-        wind.setText(todayWeather.getWind());
-        //
-        week_today1.setText(todayWeather.getWeek_today1());
-        temperature1.setText(todayWeather.getTemperatureL1() + "~" + todayWeather.getTemperatureH1());
-        climate1.setText(todayWeather.getClimate1());
-        wind1.setText(todayWeather.getWind1());
-        //
-        week_today2.setText(todayWeather.getWeek_today2());
-        temperature2.setText(todayWeather.getTemperatureL2() + "~" + todayWeather.getTemperatureH2());
-        climate2.setText(todayWeather.getClimate2());
-        wind2.setText(todayWeather.getWind2());
-        //
-        week_today3.setText(todayWeather.getWeek_today3());
-        temperature3.setText(todayWeather.getTemperatureL3() + "~" + todayWeather.getTemperatureH3());
-        climate3.setText(todayWeather.getClimate3());
-        wind3.setText(todayWeather.getWind3());
-        //
-        week_today4.setText(todayWeather.getWeek_today4());
-        temperature4.setText(todayWeather.getTemperatureL4() + "~" + todayWeather.getTemperatureH4());
-        climate4.setText(todayWeather.getClimate4());
-        wind4.setText(todayWeather.getWind4());
-        //
-        week_today5.setText(todayWeather.getWeek_today5());
-        temperature5.setText(todayWeather.getTemperatureL5() + "~" + todayWeather.getTemperatureH5());
-        climate5.setText(todayWeather.getClimate5());
-        wind5.setText(todayWeather.getWind5());
-        //
-
-        if (todayWeather.getPm25() != null) {
-            int pm2_5 = Integer.parseInt(todayWeather.getPm25());
-            if (pm2_5 <= 50)
-                pmImg.setImageResource(R.drawable.biz_plugin_weather_0_50);
-            if (pm2_5 > 50 && pm2_5 <= 100)
-                pmImg.setImageResource(R.drawable.biz_plugin_weather_51_100);
-            if (pm2_5 > 100 && pm2_5 <= 150)
-                pmImg.setImageResource(R.drawable.biz_plugin_weather_101_150);
-            if (pm2_5 > 150 && pm2_5 <= 200)
-                pmImg.setImageResource(R.drawable.biz_plugin_weather_151_200);
-            if (pm2_5 > 200 && pm2_5 <= 300)
-                pmImg.setImageResource(R.drawable.biz_plugin_weather_201_300);
-            if (pm2_5 > 300)
-                pmImg.setImageResource(R.drawable.biz_plugin_weather_greater_300);
-        }
-        //根据解析的天气类型更新界面的天气图案
-        String climate = todayWeather.getType();
+    private void changeWeatherImage(String climate, ImageView weatherImg) {
         if (climate.equals("暴雪"))
             weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoxue);
         if (climate.equals("暴雨"))
@@ -298,7 +232,129 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
             weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongxue);
         if (climate.equals("中雨"))
             weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongyu);
-        Toast.makeText(MyActivity.this, "更新成功！", Toast.LENGTH_SHORT).show();
+    }
+    void updateTodayWeather(TodayWeather todayWeather) {//根据TodayWeather获取的信息更新控件内容
+        if (mUpdateBtn.getVisibility() == View.GONE && progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
+            mUpdateBtn.setVisibility(View.VISIBLE);
+        }
+        city_name_Tv.setText(todayWeather.getCity() + "天气");
+        cityTv.setText(todayWeather.getCity());
+        timeTv.setText(todayWeather.getUpdatetime() + "发布");
+        humidityTv.setText("湿度：" + todayWeather.getShidu());
+        pmDataTv.setText(todayWeather.getPm25());
+        pmQualityTv.setText(todayWeather.getQuality());
+        weekTv.setText(todayWeather.getDate());
+        temperatureTv.setText(todayWeather.getLow() + "~" + todayWeather.getHigh());
+        climateTv.setText(todayWeather.getType());
+        windTv.setText("风力:" + todayWeather.getFengli());
+        wenduTv.setText("当前温度：" + todayWeather.getWendu() + "℃");
+        //weatherImg.setImageResource();
+        //新增六天天气信息
+        week_today.setText(todayWeather.getWeek_today());
+        temperature.setText(todayWeather.getTemperatureL() + "~" + todayWeather.getTemperatureH());
+        climate.setText(todayWeather.getClimate());
+        wind.setText(todayWeather.getWind());
+        String a = todayWeather.getClimate();
+        changeWeatherImage(a,weatherimg);
+        //weatherimg.setImageResource(R.drawable.biz_plugin_weather_zhenxue);
+        //
+        week_today1.setText(todayWeather.getWeek_today1());
+        temperature1.setText(todayWeather.getTemperatureL1() + "~" + todayWeather.getTemperatureH1());
+        climate1.setText(todayWeather.getClimate1());
+        wind1.setText(todayWeather.getWind1());
+        String b = todayWeather.getClimate1();
+        changeWeatherImage(b,weatherimg1);
+        //
+        week_today2.setText(todayWeather.getWeek_today2());
+        temperature2.setText(todayWeather.getTemperatureL2() + "~" + todayWeather.getTemperatureH2());
+        climate2.setText(todayWeather.getClimate2());
+        wind2.setText(todayWeather.getWind2());
+        String c = todayWeather.getClimate2();
+        changeWeatherImage(c,weatherimg2);
+        //
+        week_today3.setText(todayWeather.getWeek_today3());
+        temperature3.setText(todayWeather.getTemperatureL3() + "~" + todayWeather.getTemperatureH3());
+        climate3.setText(todayWeather.getClimate3());
+        wind3.setText(todayWeather.getWind3());
+        String d = todayWeather.getClimate3();
+        changeWeatherImage(d,weatherimg3);
+        //
+        week_today4.setText(todayWeather.getWeek_today4());
+        temperature4.setText(todayWeather.getTemperatureL4() + "~" + todayWeather.getTemperatureH4());
+        climate4.setText(todayWeather.getClimate4());
+        wind4.setText(todayWeather.getWind4());
+        String e = todayWeather.getClimate4();
+        changeWeatherImage(e,weatherimg4);
+        //
+        week_today5.setText(todayWeather.getWeek_today5());
+        temperature5.setText(todayWeather.getTemperatureL5() + "~" + todayWeather.getTemperatureH5());
+        climate5.setText(todayWeather.getClimate5());
+        wind5.setText(todayWeather.getWind5());
+        String f = todayWeather.getClimate5();
+        changeWeatherImage(f,weatherimg5);
+        //
+
+        if (todayWeather.getPm25() != null) {
+            int pm2_5 = Integer.parseInt(todayWeather.getPm25());
+            if (pm2_5 <= 50)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_0_50);
+            if (pm2_5 > 50 && pm2_5 <= 100)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_51_100);
+            if (pm2_5 > 100 && pm2_5 <= 150)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_101_150);
+            if (pm2_5 > 150 && pm2_5 <= 200)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_151_200);
+            if (pm2_5 > 200 && pm2_5 <= 300)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_201_300);
+            if (pm2_5 > 300)
+                pmImg.setImageResource(R.drawable.biz_plugin_weather_greater_300);
+        }
+        //根据解析的天气类型更新界面的天气图案
+        String climate = todayWeather.getType();
+        changeWeatherImage(climate,weatherImg);
+        /*
+        if (climate.equals("暴雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoxue);
+        if (climate.equals("暴雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_baoyu);
+        if (climate.equals("大暴雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_dabaoyu);
+        if (climate.equals("大雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_daxue);
+        if (climate.equals("大雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_dayu);
+        if (climate.equals("多云"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_duoyun);
+        if (climate.equals("雷阵雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_leizhenyu);
+        if (climate.equals("雷阵雨冰雹"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_leizhenyubingbao);
+        if (climate.equals("晴"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_qing);
+        if (climate.equals("沙尘暴"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_shachenbao);
+        if (climate.equals("特大暴雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_tedabaoyu);
+        if (climate.equals("雾"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_wu);
+        if (climate.equals("小雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_xiaoxue);
+        if (climate.equals("小雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_xiaoyu);
+        if (climate.equals("阴"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_yin);
+        if (climate.equals("雨夹雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_yujiaxue);
+        if (climate.equals("阵雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhenyu);
+        if (climate.equals("阵雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhenxue);
+        if (climate.equals("中雪"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongxue);
+        if (climate.equals("中雨"))
+            weatherImg.setImageResource(R.drawable.biz_plugin_weather_zhongyu);
+        Toast.makeText(MyActivity.this, "更新成功！", Toast.LENGTH_SHORT).show();*/
     }
 
     void initView() {//初始化控件，并将控件内容设置成N/A
@@ -306,31 +362,37 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         temperature = views.get(0).findViewById(R.id.temperature);
         climate = views.get(0).findViewById(R.id.climate);
         wind = views.get(0).findViewById(R.id.wind);
+        weatherimg=(ImageView)views.get(0).findViewById(R.id.weather_img);
         //
         week_today1 = views.get(0).findViewById(R.id.week_today1);
         temperature1 = views.get(0).findViewById(R.id.temperature1);
         climate1 = views.get(0).findViewById(R.id.climate1);
         wind1 = views.get(0).findViewById(R.id.wind1);
+        weatherimg1=(ImageView) views.get(0).findViewById(R.id.weather_img1);
         //
         week_today2 = views.get(0).findViewById(R.id.week_today2);
         temperature2 = views.get(0).findViewById(R.id.temperature2);
         climate2 = views.get(0).findViewById(R.id.climate2);
         wind2 = views.get(0).findViewById(R.id.wind2);
+        weatherimg2=(ImageView) views.get(0).findViewById(R.id.weather_img2);
         //
         week_today3 = views.get(1).findViewById(R.id.week_today3);
         temperature3 = views.get(1).findViewById(R.id.temperature3);
         climate3 = views.get(1).findViewById(R.id.climate3);
         wind3 = views.get(1).findViewById(R.id.wind3);
+        weatherimg3=(ImageView) views.get(1).findViewById(R.id.weather_img3);
         //
         week_today4 = views.get(1).findViewById(R.id.week_today4);
         temperature4 = views.get(1).findViewById(R.id.temperature4);
         climate4 = views.get(1).findViewById(R.id.climate4);
         wind4 = views.get(1).findViewById(R.id.wind4);
+        weatherimg4=(ImageView) views.get(1).findViewById(R.id.weather_img4);
         //
         week_today5 = views.get(1).findViewById(R.id.week_today5);
         temperature5 = views.get(1).findViewById(R.id.temperature5);
         climate5 = views.get(1).findViewById(R.id.climate5);
         wind5 = views.get(1).findViewById(R.id.wind5);
+        weatherimg5=(ImageView) views.get(1).findViewById(R.id.weather_img5);
 
         city_name_Tv = findViewById(R.id.title_city_name);
         cityTv = findViewById(R.id.city);
@@ -418,6 +480,21 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         }
     }
 
+    private void startLocate(){
+        mLocationClient = new LocationClient(getApplicationContext());
+        mLocationClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setLocationMode(LocationClientOption.LocationMode.Battery_Saving);
+        option.setCoorType("bd0911");
+        option.setOpenGps(true);
+        option.setLocationNotify(true);
+        option.setIsNeedAddress(true);
+        option.setIsNeedLocationDescribe(true);
+        option.setIsNeedLocationPoiList(true);
+        option.setIgnoreKillProcess(false);
+        mLocationClient.setLocOption(option);
+        mLocationClient.start();
+    }
 
     @Override
     public void onClick(View view) {
@@ -435,6 +512,8 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
         }
         if(view.getId()==R.id.title_location){
             //转起来？
+            startLocate();
+
             if(mLocationClient.isStarted()){
                 mLocationClient.stop();
             }
@@ -442,11 +521,12 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
             final Handler BDHandler=new Handler(){
                 public void handleMessage(Message msg){
                     switch (msg.what){
-                        case DB:
+                        case UPDATE_TODAY_WEATHER:
                             if(msg.obj!=null){
                                 if (NetUtil.getNetworkState(MyActivity.this) != NetUtil.NETWORN_NONE) {//检测网络状态
                                     Log.d("myWeather", "网络OK");
                                     queryWeatherCode(myListener.cityCode);
+                                    cityvalue=myListener.cityCode;
                                 } else {
                                     Log.d("myWeather", "网络挂了");
                                     Toast.makeText(MyActivity.this, "网络挂了！", Toast.LENGTH_LONG).show();
@@ -467,7 +547,7 @@ public class MyActivity extends AppCompatActivity implements View.OnClickListene
                             Thread.sleep(2000);
                         }
                         Message msg=new Message();
-                        msg.what=DB;
+                        msg.what=UPDATE_TODAY_WEATHER;
                         msg.obj=myListener.cityCode;
                         BDHandler.sendMessage(msg);
                     }catch (Exception e){
